@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#FBF4E7"/>
+  <text x="960" y="78" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="32" fill="#3F342C">大鹅的奇怪暑假</text>
+  <text x="349" y="168" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="22" fill="#807050">一句话</text>
+  <text x="960" y="168" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="22" fill="#807050">生成的角色</text>
+  <text x="1571" y="168" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="22" fill="#807050">游戏里的样子</text>
+  <text x="120" y="360" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="30" fill="#3F342C">一只白白圆圆、挎着偏大的</text>
+  <text x="120" y="420" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="30" fill="#3F342C">草绿色布袋、袋口露出一片</text>
+  <text x="120" y="480" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="30" fill="#3F342C">叶子的大鹅，神情笃定又好奇，</text>
+  <text x="120" y="540" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="30" fill="#3F342C">相信捡到的小东西都是宝贝，</text>
+  <text x="120" y="600" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="30" fill="#3F342C">温暖治愈的手绘风格。</text>
+  <image href="aman-c-simple-v1.png" x="690" y="230" width="540" height="540"/>
+  <rect x="1284" y="250" width="540" height="620" fill="none" stroke="#807050" stroke-width="2"/>
+  <text x="1554" y="540" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="24" fill="#807050">游戏完成后放入真实画面</text>
+</svg>

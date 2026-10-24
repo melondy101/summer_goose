@@ -1,0 +1,11 @@
+Tool: image generation, not yet run
+Status: description locked 2026-10-24; generation failed in this session because no xAI credential was available. This prompt is the recipe for a later retry. It is not a finished game image.
+Recipe: demo
+Exhibit: 瓶盖碰碰棋
+Canvas: 1024×1024
+
+Prompt:
+Use case: a single exhibit illustration for a cozy browser card game. Match the flat line-art of the approved goose: warm ivory ground, one consistent warm-brown outline, flat fills, no texture.
+Subject: one nearly square cream sheet, fill #F7F1E0, with a hand-drawn 3 by 3 grid. Lines may be slightly uneven and must still read as nine cells. Exactly four flat bottle caps occupy four different cells: two filled #E8A060 and two filled #A0A078. Each cap is a circle with one smaller inner circle. No metal shine, ridges, or logos.
+Style: gently rounded outlines in #807050, consistent medium weight, flat solid fills. No gradients, realistic shading, cast shadow, or 3D. Background is a uniform #FBF4E7 with no vignette.
+Composition: the sheet centered, about 62 percent of the image width, blank margins, nothing cropped. No goose, bird, person, text, letters, numbers, logo, watermark, border, or scenery.

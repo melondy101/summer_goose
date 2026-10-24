@@ -1,0 +1,15 @@
+Tool: ImageGen
+Requested size: 1024x1024
+Artifact: aman-c-simple-v1.png
+Source image: aman-style-study-v1.png (rightmost C character only)
+Status: C direction selected by the user; simplified single-character concept for review, not a gameplay screenshot or completed protagonist card.
+
+Prompt:
+Use case: simplified single-character concept illustration for a cozy browser game.
+Input image: The supplied image is a three-column style sheet. Use ONLY the RIGHTMOST goose labeled C as the edit target and character reference. Ignore the left and center geese. The user selected C and requested a simpler version.
+Primary request: Extract and redraw that same C goose as ONE centered full-body character on a plain warm ivory background. Simplify the rendering, not the character identity. Remove every letter, the comparison-sheet layout and all other geese.
+Must preserve: The rightmost character's silhouette, recognizable goose neck, plump pear-shaped white body, head and bill proportions, three-quarter pose facing toward the viewer's right, small dark eye, calm earnest expression, muted orange bill and two webbed feet. Preserve the oversized grass-green shoulder satchel on the viewer's right with its diagonal strap and exactly ONE green leaf sticking out. Preserve the scale and position of the bag relative to the body. Do not add any props, clothes or accessories.
+Simplify: Use clean, gently rounded warm dark-brown outlines of consistent weight and flat solid fills. Remove ALL paper grain, pencil hatching, feather texture, cloth grain, gradients and realistic shading. Reduce the wing to one simple curved shape with at most two small feather-tip notches, no individual feather drawing. The bag is one simple softly rounded cloth shape, without seams, wrinkles, folds, fasteners or decorative trim. The leaf has just one center vein, no secondary veins. One small solid dark eye. Use only the minimal necessary line to describe the bill and webbed feet. Retain the original proportions rather than turning it into an icon, duck, plush toy or tiny baby goose.
+Palette: White or very pale warm cream feathers clearly separated from a uniform warm ivory background by the outline; muted grass-green bag; slightly darker green leaf; gentle orange bill and feet. Calm low-saturation colors with clear game-readable contrast.
+Composition: A single complete goose, centered, roughly 80 percent of image height, with comfortable blank margins; no clipping of head, leaf, bag or either foot. No ground scenery, props, cast shadow, texture or vignette.
+Constraints: This must look simpler than the C reference while keeping its warmth and recognizable identity. Flat 2D illustration, not 3D, not watercolor, not paper collage. No typography, no label C, no caption, no logo, no watermark, no border. Output one character only.

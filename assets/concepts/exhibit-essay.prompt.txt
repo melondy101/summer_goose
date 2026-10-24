@@ -1,0 +1,11 @@
+Tool: image generation, not yet run
+Status: description locked 2026-10-24; generation failed in this session because no xAI credential was available. This prompt is the recipe for a later retry. It is not a finished game image.
+Recipe: essay
+Exhibit: 树荫体验报告
+Canvas: 1024×1024
+
+Prompt:
+Use case: a single exhibit illustration for a cozy browser card game. Match the flat line-art of the approved goose: warm ivory ground, one consistent warm-brown outline, flat fills, no texture.
+Subject: one horizontal cream paper slip, about twice as wide as it is tall, fill #F7F1E0, softly rounded corners. Exactly three blank horizontal strokes in #807050 suggest writing and are not letters. One simple leaf in #A0A078 with a single vein in #908060 lies diagonally across the upper left of the paper.
+Style: gently rounded outlines in #807050, consistent medium weight, flat solid fills. No paper grain, hatching, gradients, realistic shading, cast shadow, or 3D. Background is a uniform #FBF4E7 with no vignette.
+Composition: paper and leaf centered together, about 60 percent of the image width, blank margins, nothing cropped. No goose, bird, person, readable text, letters, numbers, logo, watermark, border, or scenery.

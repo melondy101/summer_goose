@@ -1,0 +1,11 @@
+Tool: image generation, not yet run
+Status: description locked 2026-10-24; generation failed in this session because no xAI credential was available. This prompt is the recipe for a later retry. It is not a finished game image.
+Recipe: tool
+Exhibit: 一颗石头的单间
+Canvas: 1024×1024
+
+Prompt:
+Use case: a single exhibit illustration for a cozy browser card game. Match the flat line-art of the approved goose: warm ivory ground, one consistent warm-brown outline, flat fills, no texture.
+Subject: one very small softly rounded cloth pouch in #A0A078, slightly open. Exactly one smooth round pebble in #C8C0B0 sits in the opening and nearly fills it. The pouch is one simple shape, with no seams, wrinkles, drawstring, fastener, or trim. No leaf.
+Style: gently rounded outlines in #807050, consistent medium weight, flat solid fills. No paper grain, hatching, gradients, realistic shading, cast shadow, or 3D. Background is a uniform #FBF4E7 with no vignette.
+Composition: one object centered, about 60 percent of the image height, blank margins, nothing cropped. No goose, bird, person, text, letters, numbers, logo, watermark, border, or scenery.
