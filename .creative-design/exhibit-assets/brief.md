@@ -24,6 +24,8 @@
 
 ## 生产记录
 
+- 2026-10-24：五张目标 PNG 均已验收并接入 `src/game/artwork.ts`。exhibit-training.png 的叶柄已改为接近 `#A0A078`。用户未要求重画时不要覆盖。
+
 - workspace: cws_59536874965099522（本轮新建，画布卡片已交付）
 - 执行模式：parallel（五张互不依赖，预先锁定为同一固定批次）
 - 每个结果双通道：design-cli +create → +get；RichMediaCard 单项交付；并另存到上述本地交付路径（prompt.md 要求）。

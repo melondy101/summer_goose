@@ -12,17 +12,22 @@
 
 ## 当前状态
 
-2026-10-24：M1（完整可玩的网页与 AI 美术接入）已实现并通过本地验证，尚未部署，也没有外部可玩链接。
+2026-10-24：M1 可玩闭环已在本地通过 Vitest 79、`tsc -b`、ESLint、`vite build`、Playwright 22。五张展品图都在 `assets/concepts/`，由 `src/game/artwork.ts` 接入，游戏里没有占位块。
 
-游戏里的阿满使用 [C 版简化线稿](assets/concepts/aman-c-simple-v1.png)，原样进入游戏不重画。五张展品图已生成四张并通过验收：exhibit-tool.png、exhibit-essay.png、exhibit-evening.png、exhibit-demo.png；**exhibit-training.png 仍未生成**，多版生图均未通过「叶子形状纸章 + 单一暖棕轮廓无边框」两项验收，按 [prompt.md](prompt.md) 规则不保留在目标路径，补图通道待确认。补图前界面用带标注的占位块跑规则，该占位不是 AI 道具，不能进入提交版本。生成与落盘见 [prompt.md](prompt.md)。主角卡版式见设计第 5.4 节，示意文件不是提交用的卡片。
+- 仓库：https://github.com/melondy101/summer_goose
+- 可玩地址：https://summergoose.vercel.app/
+
+这是 Vercel 项目 `summer_goose` 上的静态模板站，没有运行时 AI。2026-10-24 核验了首页 HTTP 200，页面含「大鹅的奇怪暑假」，`/concepts/exhibit-training.png` 返回 PNG。还没有在这个地址上完整玩一局。
+
+阿满使用 [C 版简化线稿](assets/concepts/aman-c-simple-v1.png)，原样进入游戏，不重画。主角卡版式见设计第 5.4 节；示意文件不是提交用的卡片，正式文件 `assets/delivery/aman-protagonist-card.png` 还没有。
 
 - 规则层在 `src/game/`（纯 reducer + 可注入键值随机源），界面在 `src/components/game/`；存档损坏时会显示「存档读不出来了」提示页与「开启新局」，不静默丢弃进度。
 - 开发测试种子：URL 加 `?seed=<值>` 可使整局候选可复现，界面标注「测试模式」；只用于试玩与自动化，不作为随机平衡已通过的证据。
 - 本地验证：Vitest 79、`tsc -b`、ESLint、`vite build`、Playwright 22 条（1440×900 与 390×844）全部通过，控制台无错误。逐项结果见 [开发顺序与完成标准](docs/implementation-plan.md)。
-- 尚未做：exhibit-training.png、运行时 AI（M2）、手账 PNG 导出、主角卡成品、部署与外部链接验证。
+- 尚未做：运行时 AI（M2）、手账 PNG 导出、主角卡成品、发布链接上的完整一局、赛事提交资料。
 - 待真人实测：一局时长是否约 3 分钟、不靠口头讲解是否一看就会玩、玩完是否想再来一局。设计第 7 节明确这三项不能用规则测试通过替代。
 
-设计收口不等于已经授权发布；创建站点资源、后端资源和发布都需单独授权。当前按普通浏览器网页游戏设计，钱包、链上资产、代币不在本次范围内。
+2026-10-24 已授权创建上面的仓库和 Vercel 站点。新建站点、后端资源和更换托管平台仍需单独授权。当前按普通浏览器网页游戏设计，钱包、链上资产、代币不在本次范围内。
 
 ## 文档入口
 
@@ -39,7 +44,7 @@
 
 尚未落地：服务端 AI（Qoder Edge Function + 原生 fetch，同源 /functions/v1/app 分发）、Canvas 2D 手账 PNG 导出。
 
-部署采用 Qoder 站点优先，Vercel 备用。Qoder 分别接收 dist 静态产物和独立 Edge Function，密钥通过应用 Secrets 留在服务端，不能放进 VITE_ 前端变量。备用平台只在需要时适配函数入口和运行配置，重新验证限流与费用控制；当前没有创建站点资源或部署。实际初始化用的是标准 Vite react-ts 结构（本机没有 Qoder 官方起步模板），锁文件为 bun.lock；若改用官方模板，需遵循其 Node 版本与安装流程，不混用安装器。
+公开站点是 Vercel 静态前端，构建命令 `bun run build`，产物目录 `dist`。运行时函数仍按 Qoder Edge Function 设计，尚未实现；未实现前不新增第二套函数入口。密钥不能放进 VITE_ 前端变量。实际初始化用的是标准 Vite react-ts 结构（本机没有 Qoder 官方起步模板），包名 `summer_goose`，锁文件 bun.lock。若改用官方模板，需遵循其 Node 版本与安装流程，不混用安装器。
 
 阿满和五件展品必须在制作期用 AI 生成并随游戏静态发布；运行时 AI 仅通过服务端函数生成纪念物文案和阿满的结尾信，未配置或失败时保留模板玩法。两类 AI 使用分别记录，不能用模板冒充真实模型接入；模型提供方、预算和持久计费保护仍需在接入前确认。
 
