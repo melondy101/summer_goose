@@ -59,10 +59,10 @@ https://summergoose.vercel.app/
 |---|---|---|---|
 | 主角卡 | `assets/delivery/aman-protagonist-card.png` | 1920×1080 PNG，82KB（三栏：一句话／生成的角色／游戏运行画面） | ✅ 已验收 |
 | 作品封面 | `assets/delivery/cover.jpg` | 1200×630 JPG，76KB | ✅（如需 PNG 用 cover.png） |
-| 讲解录屏 | `assets/delivery/demo.mp4` | 1280×720，27 秒，H.264，746KB（无声：完整一局→结算→复制挑战链接→图鉴→再来一局） | ✅ 已验收 |
+| 讲解录屏 | `assets/delivery/demo.mp4` | 1280×720，62 秒，H.264＋AAC，约 2MB。带中文解说配音（TTS）与同步字幕：一句话主角 → 选牌 → 合成 → 满手替换 → 开张 → 结算展品 → 复制挑战链接 → 图鉴 → 再来一局 | ✅ 已验收 |
 
-- 录屏为无声操作演示；评委可直接点链接亲自玩（有音效）。
-- 如需重录：`node scripts/record_demo.mjs`（需先 `bunx vite preview --port 4199`）。
+- 录屏配音为本机 TTS（Microsoft Huihui），字幕与解说同文，抽帧验证过渲染与同步。
+- 重录/重配音：改 `test-results/narration.json` 文案 → `powershell -ExecutionPolicy Bypass -File scripts\make_narration.ps1` → `bunx vite preview --port 4199` → `node scripts/make_demo_video.mjs`。
 - 如需重生成封面/主角卡：`node scripts/make_delivery.mjs`。
 
 ## 四、社媒链接（选填）
