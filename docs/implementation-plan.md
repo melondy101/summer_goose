@@ -126,7 +126,7 @@ Vitest 覆盖规则、存档和可独立执行的函数处理逻辑，Playwright
 - [x] 2026-10-24 用户授权后发布静态前端。公开仓库 https://github.com/melondy101/summer_goose 。Vercel 新建项目 `summer_goose`，生产地址 https://summergoose.vercel.app/ 。证据：首页 HTTP 200 且含「大鹅的奇怪暑假」，`/concepts/exhibit-training.png` 的 Content-Type 为 image/png。未手写 Qoder 站点描述文件，未创建 functions，未改账号内其他 Vercel 项目。
 - [ ] 公共 AI 未启用。启用前须另获后端授权，再在已发布站点实际调用 souvenir 与 ending。静态站不能证明函数已工作。未实现前不新增第二套函数入口。
 - [ ] 从外部浏览器打开发布链接并完整玩一局、再重开。2026-10-24 只核验了首页和展品图可加载，没有在发布链接上走完一局。
-- [ ] 按设计第 5.4 节制作主角卡：第一栏起始描述，第二栏简化线稿，第三栏使用 1440×900 的真实游戏画面。版式示意不能当作提交文件。导出为 assets/delivery/aman-protagonist-card.png。
+- [x] 2026-10-25 按设计第 5.4 节产出主角卡：第一栏起始描述，第二栏简化线稿，第三栏 1440×900 真实游戏画面，导出为 assets/delivery/aman-protagonist-card.png（1920×1080，生成脚本 scripts/make_delivery.mjs，node 运行）。同批产出作品封面 cover.jpg（1200×630）与讲解录屏 demo.mp4（1280×720、27 秒、H.264、无声，scripts/record_demo.mjs）。提交字段汇总见 docs/submission-2026-10-25.md。
 - [ ] 作品名称已定为「大鹅的奇怪暑假」，可玩链接已有。一句话介绍、游戏赛道、实际使用工具，以及已有项目和模板的来源说明，还没写成提交稿。
 - [x] 阿满线稿和五件展品图已在游戏中使用，对应 src/game/artwork.ts。
 - [ ] 模板文案与真实 AI 文案的来源标识仍未做。当前结尾信是模板。

@@ -21,7 +21,7 @@
 
 这是 Vercel 项目 `summer_goose` 上的静态模板站，没有运行时 AI。2026-10-24 核验了首页 HTTP 200，页面含「大鹅的奇怪暑假」，`/concepts/exhibit-training.png` 返回 PNG。还没有在这个地址上完整玩一局。
 
-阿满使用 [C 版简化线稿](assets/concepts/aman-c-simple-v1.png)，原样进入游戏，不重画。主角卡版式见设计第 5.4 节；示意文件不是提交用的卡片，正式文件 `assets/delivery/aman-protagonist-card.png` 还没有。
+阿满使用 [C 版简化线稿](assets/concepts/aman-c-simple-v1.png)，原样进入游戏，不重画。主角卡成品已导出到 [assets/delivery/aman-protagonist-card.png](assets/delivery/aman-protagonist-card.png)（2026-10-25，三栏：一句话／生成的角色／真实游戏画面），同目录另有作品封面 cover.jpg 与讲解录屏 demo.mp4；提交字段与话术见 [提交材料](docs/submission-2026-10-25.md)。
 
 - 规则层在 `src/game/`（纯 reducer + 可注入键值随机源），界面在 `src/components/game/`；存档损坏时会显示「存档读不出来了」提示页与「开启新局」，不静默丢弃进度。
 - 开发测试种子：URL 加 `?seed=<值>` 可使整局候选可复现，界面标注「测试模式」；只用于试玩与自动化，不作为随机平衡已通过的证据。
