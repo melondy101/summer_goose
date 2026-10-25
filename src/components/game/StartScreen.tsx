@@ -1,4 +1,5 @@
 import { FORK_EXAMPLE, RESIDENT_HINT } from "@/game/rules";
+import { AMAN_IMAGE } from "@/game/artwork";
 import { Button } from "@/components/ui/button";
 
 const INTRO =
@@ -22,8 +23,20 @@ export function StartScreen({
 }: StartScreenProps) {
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col gap-5 p-4">
-      <header className="flex flex-col gap-2">
-        <h1 className="text-2xl font-bold text-ink">大鹅的奇怪暑假</h1>
+      <header className="flex flex-col gap-3">
+        <div className="flex items-center gap-4">
+          <img
+            src={AMAN_IMAGE}
+            alt="大鹅阿满"
+            data-testid="hero-goose"
+            className="h-24 w-24 shrink-0 rounded-card border-2 border-outline bg-card object-cover p-1"
+            draggable={false}
+          />
+          <div className="flex min-w-0 flex-col gap-1">
+            <h1 className="text-2xl font-bold text-ink">大鹅的奇怪暑假</h1>
+            <p className="text-xs font-medium text-outline">主角：阿满，一只爱捡东西的大鹅</p>
+          </div>
+        </div>
         <p className="text-sm leading-relaxed text-ink/85">{INTRO}</p>
       </header>
 

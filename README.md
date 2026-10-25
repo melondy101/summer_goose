@@ -12,6 +12,8 @@
 
 ## 当前状态
 
+2026-10-25：在 M1 闭环上新增一批「看得见、可传播」的功能（详见 [营销功能说明](docs/marketing-features.md)）：Web Audio 合成音效与阿满的签名「嘎」、结算页「同一副牌挑战」一键复制链接（每局自动种子，好友打开拿到一模一样的 14 轮候选）、展品图鉴 X/5 与下局预告、PWA 装进口袋离线可玩、开始页主角卡、移动端刘海屏适配与全局错误兜底。存档 schema 升到 v2 并带 v1→v2 迁移链。
+
 2026-10-24：M1 可玩闭环已在本地通过 Vitest 79、`tsc -b`、ESLint、`vite build`、Playwright 22。五张展品图都在 `assets/concepts/`，由 `src/game/artwork.ts` 接入，游戏里没有占位块。
 
 - 仓库：https://github.com/melondy101/summer_goose
@@ -32,6 +34,7 @@
 ## 文档入口
 
 - [MVP 产品与技术设计](docs/mvp-design.md)：阿满与蝉鸣湾、活动与配方、完整闭环、AI 美术与文案、赛事验收。
+- [营销功能说明](docs/marketing-features.md)：音效与「嘎」、同一副牌挑战、展品图鉴、PWA、移动端适配与兜底的实现与验证入口。
 - [开发顺序与完成标准](docs/implementation-plan.md)：先保证可玩闭环、AI 美术和赛事硬交付，再安排运行时 AI、导出与最终回归。
 - [1024 超能 Coding 周末游戏赛道要求](docs/1024-coding-weekend-game-track.md)：可玩链接、游戏内提示、主角卡与提交期限。
 - [Maker 积分调查](docs/maker-credits.md)：已观察的额度、限制与尚未核实的能力。

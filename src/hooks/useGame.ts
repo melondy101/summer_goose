@@ -9,13 +9,42 @@ import {
   saveState,
 } from "@/game/save";
 import { readSeed, seededRandom } from "@/game/random";
+import { newRunSeed } from "@/game/challenge";
 import { hashRandom } from "@/game/rules";
-import type { Action, GameState, KeyedRandom } from "@/game/types";
+import type { Action, GameState, KeyedRandom, RulesContext } from "@/game/types";
 
-function resolveRandom(): { random: KeyedRandom; seed: string | null } {
-  if (typeof window === "undefined") return { random: hashRandom, seed: null };
-  const seed = readSeed(window.location.search);
-  return { random: seed ? seededRandom(seed) : hashRandom, seed };
+interface BootSession {
+  random: KeyedRandom;
+  /** 本局种子；带种子的链接进来就是那一副牌，空串表示旧存档续玩 */
+  runSeed: string;
+  urlSeed: string | null;
+}
+
+function bootSession(): BootSession & {
+  storage: ReturnType<typeof browserStorage>;
+  loaded: GameState | null;
+  resumed: boolean;
+  corruptSave: boolean;
+} {
+  const storage = browserStorage();
+  let loaded = loadSave(storage);
+  const urlSeed = typeof window === "undefined" ? null : readSeed(window.location.search);
+  // 挑战链接优先：带着别人的种子进来，就开同一副牌；旧进度让位给这一局
+  if (urlSeed && loaded?.runSeed !== urlSeed) {
+    clearSave(storage);
+    loaded = null;
+  }
+  const runSeed = loaded ? loaded.runSeed : (urlSeed ?? newRunSeed());
+  const random = runSeed ? seededRandom(runSeed) : hashRandom;
+  return {
+    storage,
+    loaded,
+    resumed: isResumable(loaded),
+    corruptSave: loaded === null && hasCorruptSave(storage),
+    urlSeed,
+    runSeed,
+    random,
+  };
 }
 
 export interface GameController {
@@ -27,6 +56,8 @@ export interface GameController {
   resumed: boolean;
   /** 开发测试种子，非空时整局候选可复现 */
   seed: string | null;
+  /** 本局种子；非空时结算页可以生成「同一副牌挑战」链接 */
+  runSeed: string;
   /** 有原始存档但无法通过校验，需要提示开启新局 */
   corruptSave: boolean;
   /** 直接用挂载时建好的新局开始，不重掷随机源 */
@@ -35,19 +66,12 @@ export interface GameController {
 }
 
 export function useGame(): GameController {
-  const [boot] = useState(() => {
-    const storage = browserStorage();
-    const loaded = loadSave(storage);
-    return {
-      storage,
-      loaded,
-      resumed: isResumable(loaded),
-      corruptSave: loaded === null && hasCorruptSave(storage),
-    };
-  });
-  const [source] = useState(() => resolveRandom());
+  const [boot] = useState(bootSession);
   const [corruptSave, setCorruptSave] = useState(boot.corruptSave);
-  const context = useMemo(() => ({ random: source.random }), [source.random]);
+  const context = useMemo(
+    () => ({ random: boot.random, seed: boot.runSeed || undefined }) as RulesContext,
+    [boot.random, boot.runSeed],
+  );
 
   const boundReduce = useMemo(
     () => (state: GameState, action: Action) => reduce(state, action, context),
@@ -78,7 +102,8 @@ export function useGame(): GameController {
     dispatch,
     storageReady: Boolean(boot.storage),
     resumed: boot.resumed,
-    seed: source.seed,
+    seed: boot.urlSeed,
+    runSeed: boot.runSeed,
     corruptSave,
     beginFresh,
     restart,

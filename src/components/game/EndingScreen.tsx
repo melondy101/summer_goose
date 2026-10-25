@@ -4,6 +4,8 @@ import { litWishes } from "@/game/rules";
 import { settlementLines } from "@/game/speech";
 import type { GameState } from "@/game/types";
 import { Button } from "@/components/ui/button";
+import { ChallengeCard } from "./ChallengeCard";
+import { CollectionGrid } from "./CollectionGrid";
 import { ExhibitImage } from "./ExhibitImage";
 import { SpeechBubble } from "./SpeechBubble";
 import { StampRow } from "./StampRow";
@@ -11,10 +13,12 @@ import { StampRow } from "./StampRow";
 interface EndingScreenProps {
   state: GameState;
   onRestart: () => void;
+  /** 本局种子；非空时展示「同一副牌挑战」卡 */
+  runSeed: string;
 }
 
 /** 结算就是小展览开张。三种分支：三类全亮、未集齐、零展品。 */
-export function EndingScreen({ state, onRestart }: EndingScreenProps) {
+export function EndingScreen({ state, onRestart, runSeed }: EndingScreenProps) {
   const lit = litWishes(state.souvenirs);
   const letter = endingLetter(state);
   const lines = settlementLines(state);
@@ -41,10 +45,11 @@ export function EndingScreen({ state, onRestart }: EndingScreenProps) {
         <section aria-label="展品" className="flex flex-col gap-2">
           <h2 className="text-sm font-semibold text-ink">桌上的展品</h2>
           <ul className="grid list-none grid-cols-2 gap-2 p-0 sm:grid-cols-3">
-            {state.souvenirs.map((souvenir) => (
+            {state.souvenirs.map((souvenir, index) => (
               <li
                 key={souvenir.id}
-                className="flex flex-col items-center gap-1 rounded-card border-2 border-outline bg-card p-2"
+                style={{ animationDelay: `${Math.min(index, 8) * 60}ms` }}
+                className="motion-safe:animate-[souvenir-in_0.4s_ease-out_both] flex flex-col items-center gap-1 rounded-card border-2 border-outline bg-card p-2"
               >
                 <ExhibitImage
                   recipeId={souvenir.recipeId}
@@ -69,6 +74,10 @@ export function EndingScreen({ state, onRestart }: EndingScreenProps) {
           <p className="mt-1 text-xs text-outline">文字牌是场景提示，不计作展品。</p>
         </section>
       ) : null}
+
+      <ChallengeCard runSeed={runSeed} madeCount={state.souvenirs.length} />
+
+      <CollectionGrid state={state} />
 
       {lines.choice ? (
         <p data-testid="ending-choice" className="text-sm text-ink/85">

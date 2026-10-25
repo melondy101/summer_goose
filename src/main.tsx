@@ -13,3 +13,12 @@ createRoot(container).render(
     <App />
   </StrictMode>,
 );
+
+// PWA：生产构建注册 Service Worker，装进主屏幕后离线也能玩
+if (import.meta.env.PROD && "serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js").catch(() => {
+      // 注册失败不影响网页版游玩
+    });
+  });
+}

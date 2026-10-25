@@ -102,24 +102,54 @@ function parseNotedFork(value: unknown): NotedFork | null {
   return { craftRecipeId, otherRecipeId, materials };
 }
 
+type Migration = (raw: Record<string, unknown>) => Record<string, unknown>;
+
+/**
+ * 旧版本存档的升级步骤。v1 → v2：旧局没有种子字段，补空串，
+ * 表示「续玩可以，但这一局生成不了挑战链接」。
+ */
+const MIGRATIONS: Record<number, Migration> = {
+  1: (raw) => ({ ...raw, runSeed: "" }),
+};
+
+/** 把旧版本存档逐步升到当前版本；版本号非法或来自更新的版本时返回 null。 */
+export function migrateSave(raw: Record<string, unknown>): Record<string, unknown> | null {
+  let version = raw.schemaVersion;
+  if (typeof version !== "number" || !Number.isInteger(version)) return null;
+  if (version < 1 || version > SAVE_SCHEMA_VERSION) return null;
+  let current = raw;
+  while (version < SAVE_SCHEMA_VERSION) {
+    const step = MIGRATIONS[version];
+    if (!step) return null;
+    current = step(current);
+    version += 1;
+  }
+  current.schemaVersion = SAVE_SCHEMA_VERSION;
+  return current;
+}
+
 /** 校验并恢复存档；核心对局字段无法通过校验时返回 null。 */
 export function parseSave(raw: unknown): GameState | null {
   if (!isRecord(raw)) return null;
-  if (raw.schemaVersion !== SAVE_SCHEMA_VERSION) return null;
+  const migrated = migrateSave(raw);
+  if (!migrated) return null;
 
-  const runId = raw.runId;
-  const turn = raw.turn;
-  const phase = raw.phase;
+  const runSeed = migrated.runSeed;
+  if (typeof runSeed !== "string" || runSeed.length > 64) return null;
+
+  const runId = migrated.runId;
+  const turn = migrated.turn;
+  const phase = migrated.phase;
   if (typeof runId !== "string" || runId.length === 0) return null;
   if (typeof turn !== "number" || !Number.isInteger(turn) || turn < 0 || turn > TOTAL_PICKS) {
     return null;
   }
   if (!isPhase(phase)) return null;
 
-  const candidates = raw.candidates;
-  const hand = raw.hand;
-  const souvenirs = raw.souvenirs;
-  const events = raw.events;
+  const candidates = migrated.candidates;
+  const hand = migrated.hand;
+  const souvenirs = migrated.souvenirs;
+  const events = migrated.events;
   if (!Array.isArray(candidates) || !candidates.every(isCard)) return null;
   if (!Array.isArray(hand) || !hand.every(isCard)) return null;
   if (!Array.isArray(souvenirs) || !souvenirs.every(isSouvenir)) return null;
@@ -132,9 +162,9 @@ export function parseSave(raw: unknown): GameState | null {
   if (new Set(souvenirIds).size !== souvenirIds.length) return null;
 
   let pendingCard: HandCard | null = null;
-  if (raw.pendingCard !== null && raw.pendingCard !== undefined) {
-    if (!isCard(raw.pendingCard)) return null;
-    pendingCard = raw.pendingCard;
+  if (migrated.pendingCard !== null && migrated.pendingCard !== undefined) {
+    if (!isCard(migrated.pendingCard)) return null;
+    pendingCard = migrated.pendingCard;
   }
   if (phase === "replacing" && !pendingCard) return null;
   if (phase !== "replacing" && pendingCard) return null;
@@ -145,11 +175,11 @@ export function parseSave(raw: unknown): GameState | null {
   if (phase === "finalTidy" && candidates.length !== 0) return null;
 
   let ending: GameState["ending"] = null;
-  if (raw.ending !== null && raw.ending !== undefined) {
-    if (!isRecord(raw.ending)) return null;
-    const kind = raw.ending.kind;
+  if (migrated.ending !== null && migrated.ending !== undefined) {
+    if (!isRecord(migrated.ending)) return null;
+    const kind = migrated.ending.kind;
     if (kind !== "all" && kind !== "partial" && kind !== "empty") return null;
-    const missing = raw.ending.missingWishes;
+    const missing = migrated.ending.missingWishes;
     if (!Array.isArray(missing) || !missing.every((w) => WISH_ORDER.includes(w as never))) {
       return null;
     }
@@ -158,12 +188,13 @@ export function parseSave(raw: unknown): GameState | null {
   if (phase === "settled" && !ending) return null;
   if (phase !== "settled" && ending) return null;
 
-  const speech = parseSpeech(raw.speech);
-  const bagFullAnnounced = raw.bagFullAnnounced === true;
-  const notedFork = parseNotedFork(raw.notedFork);
+  const speech = parseSpeech(migrated.speech);
+  const bagFullAnnounced = migrated.bagFullAnnounced === true;
+  const notedFork = parseNotedFork(migrated.notedFork);
 
   return {
     schemaVersion: SAVE_SCHEMA_VERSION,
+    runSeed,
     runId,
     turn,
     phase,

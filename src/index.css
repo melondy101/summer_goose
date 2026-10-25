@@ -19,6 +19,7 @@
   html {
     background-color: var(--color-ground);
     color: var(--color-ink);
+    overscroll-behavior: none;
   }
 
   body {
@@ -33,11 +34,37 @@
       "Microsoft YaHei",
       sans-serif;
     -webkit-text-size-adjust: 100%;
+    /* 刘海屏与底部小黑条 */
+    padding:
+      env(safe-area-inset-top)
+      env(safe-area-inset-right)
+      env(safe-area-inset-bottom)
+      env(safe-area-inset-left);
+  }
+
+  /* 去掉触控双击缩放延迟，按钮文案不可选中 */
+  button,
+  [role="button"] {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
+  }
+}
+
+/* 结算页展品逐个入场 */
+@keyframes souvenir-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 

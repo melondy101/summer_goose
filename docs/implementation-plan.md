@@ -161,3 +161,12 @@ Vitest 覆盖规则、存档和可独立执行的函数处理逻辑，Playwright
 每个里程碑记录版本、操作、预期、实测、证据与阻塞。分别报告规则测试、构建、真实可玩、AI 美术、真实运行时 AI、PNG、公开链接、主角卡与提交状态，不记录任何服务密钥。
 
 M1 已实现并通过本地验证（Vitest 79、tsc、ESLint、vite build、Playwright 22）。五张展品图已接入。2026-10-24 静态站已发布到 https://summergoose.vercel.app/ 。尚未创建运行时模型请求、截取游戏画面或制作主角卡成品。发布链接上的完整一局尚未实测。未勾选项是后续工作。
+
+### 2026-10-25 营销功能批次（本地验证记录）
+
+- 操作：按赛道评审四维度补强可见功能——Web Audio 合成音效与阿满「嘎」（含右上角静音开关）、结算页「同一副牌挑战」（每局自动 runSeed，复制 `?seed=` 链接，好友拿到同 14 轮候选；存档 schema v1→v2 迁移链）、展品图鉴 X/5 与下局预告、PWA（manifest + sw.js + 纯 JS 生成的图标，离线可玩）、开始页主角卡、结算展品入场动画、viewport-fit/safe-area/touch-action 移动端适配、全局 ErrorBoundary。清单见 docs/marketing-features.md。
+- 规则测试：Vitest 114 全绿（新增 35：音效触发 planSfx、图鉴 collectionView、挑战链接、种子复现与迁移）。
+- 构建：`tsc -b --noEmit`、ESLint（仅 button.tsx 既有警告）、`vite build` 通过；dist 含 manifest.webmanifest、sw.js、icons/、concepts/。
+- 真实可玩：Playwright 32/32 通过（桌面 1440×900 + Pixel 7），新增 e2e/marketing.spec.ts 7 项 ×2 端：挑战链接好友复现同副牌、图鉴计数、音效开关持久化、manifest/SW/图标可达、viewport 声明。游戏内截图自检（开始/对局/结算桌面+手机）无布局错乱。
+- 修正：e2e/game.spec.ts 结算标题定位器改用 `level: 1`——随机种子化后贪心一局可能集齐三展签，结尾信标题与页面主标题同文导致旧定位器撞两个元素（更精确而非放宽断言）。
+- 已知边界：挑战链接优先于本地未完成存档（带着别人种子进来会开新局）；旧 v1 存档续玩局生成不了挑战链接（迁移补空种子）；重开会换一副新牌。运行时 AI、PNG 导出、主角卡成品仍未实现。

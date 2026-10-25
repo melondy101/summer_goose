@@ -49,6 +49,8 @@ export interface Ending {
 
 export interface GameState {
   schemaVersion: number;
+  /** 本局随机种子；同一种子整局候选可复现，空串表示旧版本存档续玩的局 */
+  runSeed: string;
   runId: string;
   /** 已完成的选牌次数，0–14 */
   turn: number;
@@ -77,4 +79,6 @@ export type KeyedRandom = (key: string) => number;
 
 export interface RulesContext {
   random: KeyedRandom;
+  /** 新局的种子；缺省时按无种子源创建（旧测试与旧存档续玩路径） */
+  seed?: string;
 }

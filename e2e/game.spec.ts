@@ -84,7 +84,9 @@ test.describe("完整一局", () => {
     await expect(page.getByTestId("remaining")).toHaveText("可以开张");
     await finish.click();
 
-    await expect(page.getByRole("heading", { name: "夏天来过的小证据" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 1, name: "夏天来过的小证据" }),
+    ).toBeVisible();
     await expect(page.getByTestId("ending-letter")).toBeVisible();
     await expect(page.getByTestId("ending-letter")).toContainText("阿满");
 

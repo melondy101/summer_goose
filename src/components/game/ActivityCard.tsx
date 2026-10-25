@@ -32,7 +32,9 @@ export function ActivityCard({
         "flex min-h-11 w-full flex-col items-start gap-1 rounded-card border-2 bg-card px-3 text-left",
         compact ? "py-2" : "py-3",
         selected ? "border-accent" : "border-outline",
-        interactive ? "cursor-pointer hover:bg-paper" : "cursor-default",
+        interactive
+          ? "cursor-pointer transition-transform hover:bg-paper motion-safe:duration-150 motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-95"
+          : "cursor-default",
         disabled && "opacity-40",
       )}
     >

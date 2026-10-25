@@ -5,6 +5,7 @@ import {
   WISH_ORDER,
   wishOfRecipe,
 } from "./recipes";
+import { seededRandom } from "./random";
 import type {
   Action,
   ActivityType,
@@ -34,7 +35,7 @@ export {
 export type { Recipe } from "./recipes";
 export type * from "./types";
 
-export const SAVE_SCHEMA_VERSION = 1;
+export const SAVE_SCHEMA_VERSION = 2;
 export const HAND_LIMIT = 6;
 export const TOTAL_PICKS = 14;
 export const SAVE_KEY = "summer.save.v1";
@@ -52,6 +53,21 @@ function makeRunId(random: KeyedRandom, key: string): string {
   const a = Math.floor(random(`${key}:a`) * 0xffffffff);
   const b = Math.floor(random(`${key}:b`) * 0xffffffff);
   return `r${a.toString(36)}${b.toString(36)}`;
+}
+
+/** 新一局的种子：从当前源派生，重开会换一副新牌，但同起点必然得到同种子。 */
+function makeRunSeed(random: KeyedRandom, key: string): string {
+  const a = Math.floor(random(`${key}:a`) * 0xffffffff);
+  const b = Math.floor(random(`${key}:b`) * 0xffffffff);
+  return `${a.toString(36)}${b.toString(36)}`.slice(0, 12);
+}
+
+/**
+ * 本局自己的随机源：种子化后候选只依赖 (runSeed, runId, turn)，
+ * 刷新续玩、重开、好友打开挑战链接三条路径拿到的候选完全一致。
+ */
+function randomOf(state: GameState, ctx: RulesContext): KeyedRandom {
+  return state.runSeed ? seededRandom(state.runSeed) : ctx.random;
 }
 
 function drawCandidates(runId: string, turn: number, random: KeyedRandom): HandCard[] {
@@ -166,13 +182,15 @@ export function forkReminder(state: GameState): ForkReminder | null {
 }
 
 export function createInitialState(ctx: RulesContext, seedKey = "init"): GameState {
-  const runId = makeRunId(ctx.random, seedKey);
+  const source = ctx.seed ? seededRandom(ctx.seed) : ctx.random;
+  const runId = makeRunId(source, seedKey);
   return {
     schemaVersion: SAVE_SCHEMA_VERSION,
+    runSeed: ctx.seed ?? "",
     runId,
     turn: 0,
     phase: "picking",
-    candidates: drawCandidates(runId, 0, ctx.random),
+    candidates: drawCandidates(runId, 0, source),
     hand: [],
     pendingCard: null,
     souvenirs: [],
@@ -190,7 +208,7 @@ function afterPick(state: GameState, turn: number, ctx: RulesContext): GameState
     ...state,
     turn,
     phase: lastTurn ? "finalTidy" : "picking",
-    candidates: lastTurn ? [] : drawCandidates(state.runId, turn, ctx.random),
+    candidates: lastTurn ? [] : drawCandidates(state.runId, turn, randomOf(state, ctx)),
     pendingCard: null,
   };
   return { ...next, notedFork: next.notedFork ?? findFork(next) };
@@ -313,8 +331,14 @@ export function reduce(state: GameState, action: Action, ctx: RulesContext): Gam
       return craft(state, action.recipeId);
     case "FINISH":
       return finish(state);
-    case "RESTART":
-      return createInitialState(ctx, `restart:${state.runId}:${state.turn}`);
+    case "RESTART": {
+      // 从当前源派生下一局种子：重开换新牌，同起点的两位玩家重开也一致
+      const nextSeed = makeRunSeed(
+        ctx.random,
+        `next:${state.runSeed}:${state.runId}:${state.turn}`,
+      );
+      return createInitialState({ random: ctx.random, seed: nextSeed }, "init");
+    }
     default:
       return state;
   }
