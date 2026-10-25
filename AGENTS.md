@@ -6,7 +6,8 @@
 
 ## 当前授权与范围
 
-- 当前阶段（2026-10-24）：设计已收口。M1 可玩闭环已实现并通过本地验证（Vitest 79、`tsc -b`、ESLint、`vite build`、Playwright 22 条）。五张展品图已接入，不用占位块。
+- 当前阶段（2026-10-25）：M1 闭环 + 营销功能批次已完成并通过本地验证（Vitest 114、`tsc -b`、ESLint、`vite build`、Playwright 32 条；存档 schema v2 带 v1→v2 迁移）。五张展品图与主角卡（assets/delivery/aman-protagonist-card.png）均已接入。
+- 2026-10-25 14:59 已在 1024 赛事站正式提交游戏赛道作品：序号 464、版本 V1、状态「待审核」。16:05 截止前如需改动须在提交页重新提交；提交材料与话术见 docs/submission-2026-10-25.md。小红书发布稿存于创作平台草稿箱，待人工点发布。
 - 2026-10-24 已授权并完成：公开仓库 https://github.com/melondy101/summer_goose ，Vercel 项目 `summer_goose`，生产地址 https://summergoose.vercel.app/ 。这是静态模板站，没有 Edge Function。继续向这个项目部署静态前端不需要再授权。
 - 仍需单独授权：新建站点、更换托管平台、创建后端资源、配置运行时密钥。不要覆盖账号里的其他 Vercel 项目，不要手写 Qoder 站点描述文件。
 - M2 运行时 AI 依赖合法模型提供方与服务端密钥；未确认前只交付模板玩法，不得宣称真实 AI 已接入。
